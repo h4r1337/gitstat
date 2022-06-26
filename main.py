@@ -18,12 +18,12 @@ def get_contrib_cal_data(user: str) -> dict[str, int]:
     contributions = requests.get(contrib_url).text
 
     for line in contributions.split('\n'):
-        match = re.search('data-count="(\d+)".*data-date="(\d+-\d+-\d+)"', line)
+        match = re.search('data-date="(\d+-\d+-\d+)".*data-level="(\d+)"', line)
 
         if not match:
             continue
         if match.group(1) != b'0':
-            contrib_cal_data[match.group(2)] = int(match.group(1))
+            contrib_cal_data[match.group(1)] = int(match.group(2))
 
     return contrib_cal_data
 
