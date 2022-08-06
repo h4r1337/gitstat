@@ -1,6 +1,8 @@
-#!/usr/bin/python3
+#!/usr/bin/env python3
 import requests
 import re
+from pytermgui import tim, terminal, ColorSystem
+
 
 def get_contrib_cal_data(user: str) -> dict[str, int]:
     """Retrieve the GitHub contribution calendar data
@@ -27,10 +29,22 @@ def get_contrib_cal_data(user: str) -> dict[str, int]:
 
     return contrib_cal_data
 
+def render_contrib_cal(data: dict) -> None:
+    buff = ""
+    for y_pos in range(0, 7):
+        for x_pos in range(53):
+            buff += "[57;211;83]▢"
+
+        buff += "[/]\n"
+
+    system = ColorSystem.TRUE
+    terminal.forced_colorsystem = system
+
+    tim.print(buff)
 
 def main():
     contribution_data = get_contrib_cal_data('h4r1337')
-    print(contribution_data)
+    render_contrib_cal(contribution_data)
 
 if __name__ == "__main__":
     main()
